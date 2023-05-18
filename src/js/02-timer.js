@@ -7,16 +7,21 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-
     if (Date.now() > selectedDates[0].getTime()) {
       window.alert('Please choose a date in the future');
+
       refs.btnStart.disabled = true;
       refs.btnStart.classList.add('disabled');
     } else {
       refs.btnStart.disabled = false;
       refs.btnStart.classList.remove('disabled');
     }
+
+    setInterval(() => {
+      const deltaTime = selectedDates[0].getTime() - Date.now();
+      const timeComponents = convertMs(deltaTime);
+      console.log(timeComponents);
+    }, 1000);
   },
 };
 flatpickr('#datetime-picker', options);
@@ -25,6 +30,8 @@ const refs = {
   input: document.querySelector('#datetime-picker'),
   btnStart: document.querySelector('[data-start]'),
 };
+
+refs.btnStart.addEventListener('submit', () => {});
 
 function convertMs(ms) {
   const second = 1000;
