@@ -8,6 +8,15 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     console.log(selectedDates[0]);
+
+    if (Date.now() > selectedDates[0].getTime()) {
+      window.alert('"Please choose a date in the future"');
+      refs.btnStart.disabled = true;
+      refs.btnStart.classList.add('disabled');
+    } else {
+      refs.btnStart.disabled = false;
+      refs.btnStart.classList.remove('disabled');
+    }
   },
 };
 flatpickr('#datetime-picker', options);
