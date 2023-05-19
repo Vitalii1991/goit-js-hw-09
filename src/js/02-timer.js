@@ -18,11 +18,24 @@ const options = {
   onClose: onCloseHandler,
 };
 
-flatpickr('#datetime-picker', options);
-
 let selectedDatesOnCalendar = null;
 
+flatpickr('#datetime-picker', options);
+
 refs.btnStart.addEventListener('click', onBtnStartClick);
+
+function onCloseHandler(selectedDates) {
+  selectedDatesOnCalendar = selectedDates[0];
+
+  if (Date.now() < selectedDatesOnCalendar.getTime()) {
+    refs.input.disabled = true;
+
+    refs.btnStart.disabled = false;
+    refs.btnStart.classList.remove('disabled');
+  } else {
+    window.alert('Please choose a date in the future');
+  }
+}
 
 function onBtnStartClick() {
   refs.btnStart.disabled = true;
@@ -42,19 +55,6 @@ function onBtnStartClick() {
       clearInterval(intervalId);
     }
   }, 1000);
-}
-
-function onCloseHandler(selectedDates) {
-  selectedDatesOnCalendar = selectedDates[0];
-
-  if (Date.now() < selectedDatesOnCalendar.getTime()) {
-    refs.input.disabled = true;
-
-    refs.btnStart.disabled = false;
-    refs.btnStart.classList.remove('disabled');
-  } else {
-    window.alert('Please choose a date in the future');
-  }
 }
 
 function convertMs(ms) {
