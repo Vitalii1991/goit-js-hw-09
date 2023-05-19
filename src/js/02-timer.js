@@ -32,11 +32,11 @@ function onBtnStartClick() {
 
   const intervalId = setInterval(() => {
     deltaTime = selectedDatesOnCalendar.getTime() - Date.now();
-    const { days, hours, minutes, seconds } = convertMs(deltaTime);
+    const time = convertMs(deltaTime);
 
     console.log(deltaTime);
 
-    updateValueSpan({ days, hours, minutes, seconds });
+    updateValueSpan(time);
 
     if (deltaTime <= 999) {
       clearInterval(intervalId);
