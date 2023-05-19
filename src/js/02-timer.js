@@ -36,6 +36,7 @@ function onBtnStartClick() {
 
 function onCloseHandler(selectedDates) {
   console.log(selectedDates[0]);
+
   selectedDatesOnCalendar = selectedDates[0];
 
   if (Date.now() > selectedDates[0].getTime()) {
