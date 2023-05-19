@@ -9,11 +9,6 @@ const refs = {
   secondsEl: document.querySelector('[data-seconds]'),
 };
 
-refs.btnStart.addEventListener('click', onBtnStartClick);
-function onBtnStartClick() {
-  console.log('Click');
-}
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -24,8 +19,24 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
+let selectedDatesOnCalendar = null;
+
+refs.btnStart.addEventListener('click', onBtnStartClick);
+
+function onBtnStartClick() {
+  console.log('Click');
+
+  setInterval(() => {
+    const deltaTime = selectedDatesOnCalendar.getTime() - Date.now();
+    const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+    updateValueSpan({ days, hours, minutes, seconds });
+  }, 1000);
+}
+
 function onCloseHandler(selectedDates) {
   console.log(selectedDates[0]);
+  selectedDatesOnCalendar = selectedDates[0];
 
   if (Date.now() > selectedDates[0].getTime()) {
     window.alert('Please choose a date in the future');
@@ -36,13 +47,6 @@ function onCloseHandler(selectedDates) {
     refs.btnStart.disabled = false;
     refs.btnStart.classList.remove('disabled');
   }
-
-  setInterval(() => {
-    const deltaTime = selectedDates[0].getTime() - Date.now();
-    const { days, hours, minutes, seconds } = convertMs(deltaTime);
-
-    updateValueSpan({ days, hours, minutes, seconds });
-  }, 1000);
 }
 
 function convertMs(ms) {
