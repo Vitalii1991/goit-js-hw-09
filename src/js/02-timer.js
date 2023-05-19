@@ -9,34 +9,41 @@ const refs = {
   secondsEl: document.querySelector('[data-seconds]'),
 };
 
+refs.btnStart.addEventListener('click', onBtnStartClick);
+function onBtnStartClick() {
+  console.log('Click');
+}
+
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {
-    console.log(selectedDates[0]);
-
-    if (Date.now() > selectedDates[0].getTime()) {
-      window.alert('Please choose a date in the future');
-
-      refs.btnStart.disabled = true;
-      refs.btnStart.classList.add('disabled');
-    } else {
-      refs.btnStart.disabled = false;
-      refs.btnStart.classList.remove('disabled');
-    }
-
-    setInterval(() => {
-      const deltaTime = selectedDates[0].getTime() - Date.now();
-      const { days, hours, minutes, seconds } = convertMs(deltaTime);
-
-      updateValueSpan({ days, hours, minutes, seconds });
-    }, 1000);
-  },
+  onClose: onCloseHandler,
 };
 
 flatpickr('#datetime-picker', options);
+
+function onCloseHandler(selectedDates) {
+  console.log(selectedDates[0]);
+
+  if (Date.now() > selectedDates[0].getTime()) {
+    window.alert('Please choose a date in the future');
+
+    refs.btnStart.disabled = true;
+    refs.btnStart.classList.add('disabled');
+  } else {
+    refs.btnStart.disabled = false;
+    refs.btnStart.classList.remove('disabled');
+  }
+
+  setInterval(() => {
+    const deltaTime = selectedDates[0].getTime() - Date.now();
+    const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+    updateValueSpan({ days, hours, minutes, seconds });
+  }, 1000);
+}
 
 function convertMs(ms) {
   const second = 1000;
