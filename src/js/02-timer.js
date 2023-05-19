@@ -37,11 +37,11 @@ function onBtnStartClick() {
     console.log(deltaTime);
 
     updateValueSpan({ days, hours, minutes, seconds });
-  }, 1000);
 
-  if (deltaTime <= 0) {
-    clearInterval(intervalId);
-  }
+    if (deltaTime <= 999) {
+      clearInterval(intervalId);
+    }
+  }, 1000);
 }
 
 function onCloseHandler(selectedDates) {
