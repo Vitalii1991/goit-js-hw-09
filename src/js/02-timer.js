@@ -47,8 +47,6 @@ function onBtnStartClick() {
     deltaTime = selectedDatesOnCalendar.getTime() - Date.now();
     const time = convertMs(deltaTime);
 
-    console.log(deltaTime);
-
     updateValueSpan(time);
 
     if (deltaTime <= 999) {
