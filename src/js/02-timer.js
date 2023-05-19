@@ -53,6 +53,7 @@ function onBtnStartClick() {
     updateValueSpan(time);
 
     if (deltaTime <= 999) {
+      Notiflix.Notify.info('Time is over!');
       clearInterval(intervalId);
     }
   }, 1000);
