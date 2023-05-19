@@ -34,7 +34,7 @@ function onCloseHandler(selectedDates) {
     refs.btnStart.disabled = false;
     refs.btnStart.classList.remove('disabled');
 
-    Notiflix.Notify.success('Great, start the timer.');
+    Notiflix.Notify.success('Great, click button "Start".');
   } else {
     Notiflix.Notify.failure('Please choose a date in the future.');
   }
