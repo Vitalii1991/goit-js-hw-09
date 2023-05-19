@@ -2,6 +2,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const refs = {
+  input: document.querySelector('#datetime-picker'),
   btnStart: document.querySelector('[data-start]'),
   daysEl: document.querySelector('[data-days]'),
   hoursEl: document.querySelector('[data-hours]'),
@@ -24,29 +25,35 @@ let selectedDatesOnCalendar = null;
 refs.btnStart.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick() {
-  console.log('Click');
+  refs.btnStart.disabled = true;
+  refs.btnStart.classList.add('disabled');
 
-  setInterval(() => {
-    const deltaTime = selectedDatesOnCalendar.getTime() - Date.now();
+  let deltaTime = null;
+
+  const intervalId = setInterval(() => {
+    deltaTime = selectedDatesOnCalendar.getTime() - Date.now();
     const { days, hours, minutes, seconds } = convertMs(deltaTime);
+
+    console.log(deltaTime);
 
     updateValueSpan({ days, hours, minutes, seconds });
   }, 1000);
+
+  if (deltaTime <= 0) {
+    clearInterval(intervalId);
+  }
 }
 
 function onCloseHandler(selectedDates) {
-  console.log(selectedDates[0]);
-
   selectedDatesOnCalendar = selectedDates[0];
 
-  if (Date.now() > selectedDates[0].getTime()) {
-    window.alert('Please choose a date in the future');
+  if (Date.now() < selectedDatesOnCalendar.getTime()) {
+    refs.input.disabled = true;
 
-    refs.btnStart.disabled = true;
-    refs.btnStart.classList.add('disabled');
-  } else {
     refs.btnStart.disabled = false;
     refs.btnStart.classList.remove('disabled');
+  } else {
+    window.alert('Please choose a date in the future');
   }
 }
 
