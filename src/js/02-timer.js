@@ -55,6 +55,7 @@ function onBtnStartClick() {
     if (deltaTime <= 999) {
       Notiflix.Notify.info('Time is over!');
       clearInterval(intervalId);
+      refs.input.disabled = false;
     }
   }, 1000);
 }
