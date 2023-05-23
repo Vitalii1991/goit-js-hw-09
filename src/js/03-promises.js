@@ -23,15 +23,13 @@ function createPromise(position, delay) {
 }
 
 refs.form.addEventListener('input', () => {
-  console.log('Amount: ', refs.inputAmount.value);
-  console.log('Step: ', refs.inputStep.value);
-  console.log('Delay: ', refs.inputDelay.value);
-
-  let step = refs.inputStep.value;
+  // console.log('Amount: ', refs.inputAmount.value);
+  // console.log('Step: ', refs.inputStep.value);
+  // console.log('Delay: ', refs.inputDelay.value);
 
   if (refs.inputAmount) {
     for (let i = 1; i <= refs.inputAmount.value; i++) {
-      createPromise(i, refs.inputDelay.value + step)
+      createPromise(i, refs.inputDelay.value)
         .then(({ position, delay }) => {
           Notiflix.Notify.success(
             `✅ Fulfilled promise ${position} in ${delay}ms`
