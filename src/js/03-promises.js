@@ -32,19 +32,23 @@ function onSubmit(e) {
 
   let delay = initialDelay;
 
-  for (let i = 1; i <= amount; i++) {
-    createPromise(i, delay)
-      .then(({ position, delay }) => {
-        Notiflix.Notify.success(
-          `✅ Fulfilled promise ${position} in ${delay}ms`
-        );
-      })
-      .catch(({ position, delay }) => {
-        Notiflix.Notify.failure(
-          `❌ Rejected promise ${position} in ${delay}ms`
-        );
-      });
+  if (initialDelay <= 0 || step <= 0 || amount <= 0) {
+    Notiflix.Notify.failure('❌ Enter a value bigger than zero!');
+  } else {
+    for (let i = 1; i <= amount; i++) {
+      createPromise(i, delay)
+        .then(({ position, delay }) => {
+          Notiflix.Notify.success(
+            `✅ Fulfilled promise ${position} in ${delay}ms`
+          );
+        })
+        .catch(({ position, delay }) => {
+          Notiflix.Notify.failure(
+            `❌ Rejected promise ${position} in ${delay}ms`
+          );
+        });
 
-    delay += step;
+      delay += step;
+    }
   }
 }
