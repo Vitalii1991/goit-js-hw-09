@@ -16,7 +16,7 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose: onCloseHandler,
+  onClose: onClose,
 };
 
 let selectedDatesOnCalendar = null;
@@ -25,7 +25,7 @@ flatpickr('#datetime-picker', options);
 
 refs.btnStart.addEventListener('click', onBtnStartClick);
 
-function onCloseHandler(selectedDates) {
+function onClose(selectedDates) {
   selectedDatesOnCalendar = selectedDates[0];
 
   if (Date.now() < selectedDatesOnCalendar.getTime()) {
